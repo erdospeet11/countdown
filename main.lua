@@ -1,3 +1,5 @@
+local Button = require("button")
+
 local player = {
     x = 100,
     y = 100,
@@ -6,11 +8,23 @@ local player = {
     color = {0.2, 0.6, 1.0}
 }
 
+local end_button
+local combine_button
+
 function love.load()
     love.window.setTitle("Love2D Starter Project")
-    love.window.setMode(800, 600, { resizable = false, vsync = true })
+    love.window.setMode(1280, 720, { resizable = false, vsync = true })
 
     love.graphics.setBackgroundColor(0.1, 0.1, 0.12)
+
+    local screen_width, screen_height = love.graphics.getDimensions()
+    local bw, bh, gap, margin = 200, 50, 20, 40
+    local x = screen_width - bw - margin
+    local total_h = bh * 2 + gap
+    local y = (screen_height - total_h) / 2
+
+    end_button = Button.new(x, y, bw, bh, "End Turn")
+    combine_button = Button.new(x, y + bh + gap, bw, bh, "Combine")
 end
 
 function love.update(dt)
@@ -33,13 +47,8 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.setColor(player.color)
-    love.graphics.rectangle("fill", player.x, player.y, player.size, player.size)
-
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.print("Use WASD or Arrow Keys to move", 10, 10)
-    love.graphics.print("Press ESC to exit, R to reset", 10, 30)
-    love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 570)
+    end_button:draw()
+    combine_button:draw()
 end
 
 function love.keypressed(key)
