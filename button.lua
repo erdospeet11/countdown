@@ -1,14 +1,31 @@
 local Button = {}
 Button.__index = Button
 
-function Button.new(x, y, width, height, text)
+function Button.new(x, y, width, height, text, onClick)
     local self = setmetatable({}, Button)
     self.x = x
     self.y = y
     self.width = width
     self.height = height
     self.text = text
+    self.onClick = onClick
     return self
+end
+
+function Button:contains(mx, my)
+    return mx >= self.x and mx <= self.x + self.width
+       and my >= self.y and my <= self.y + self.height
+end
+
+function Button:isHovered()
+    local mx, my = love.mouse.getPosition()
+    return self:contains(mx, my)
+end
+
+function Button:click()
+    if self.onClick then
+        self.onClick()
+    end
 end
 
 function Button:draw()
