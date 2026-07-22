@@ -21,16 +21,16 @@ function Hand.new()
     return Hand._instance
 end
 
-function Hand.addCard(card)
+function Hand:addCard(card)
     cards[cardCount] = card
     cardCount = cardCount + 1
 end
 
-function Hand.getCard(index)
+function Hand:getCard(index)
     return cards[index]
 end
 
-function Hand.popCard(index)
+function Hand:popCard(index)
     local popped = cards[index]
     for i=index,cardCount-1,1 do
         cards[i] = cards[i+1]
